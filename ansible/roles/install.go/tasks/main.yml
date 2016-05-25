@@ -1,0 +1,37 @@
+# install golang and glide
+#
+
+- name: golang - set binary path
+  set_fact:
+    golang_prefix: "/usr/local"
+  when: golang_path is not defined
+
+- name: golang - check installed
+  stat:
+    path: "{{ golang_prefix }}/go/bin/go"
+  register: golang_bin
+
+- name: golang - download distribution
+  get_url:
+    url: "https://storage.googleapis.com/golang/go1.6.2.linux-amd64.tar.gz"
+    dest: "/tmp/golang.tar.gz"
+    mode: 0644
+  when: not golang_bin.stat.exists
+
+- name: golang - unpack to destination
+  unarchive:
+    copy: no
+    src: "/tmp/golang.tar.gz"
+    dest: "{{ golang_prefix }}"
+  when: not golang_bin.stat.exists
+
+- name: golang - glide - add repository
+  apt_repository:
+    repo: "ppa:masterminds/glide"
+    state: "present"
+    update_cache: yes
+
+- name: golang - glide - install
+  apt:
+    name: "glide"
+    state: "present"

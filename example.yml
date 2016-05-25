@@ -1,0 +1,35 @@
+# name of image to use
+image: nginx
+
+# prefix for container names, final name will be:
+# <name>.v<tag>.<millisecond>
+name: nginx-staging
+
+# set of environment variables to set to container
+env:
+  - HELLO=WORLD
+
+# define ports exposed by container
+# each port available in upstream template as:
+# 80/tcp => %TCP_80%
+# 514/udp => %UDP_514%
+port:
+  - 80/tcp
+
+bootstrap:
+  - touch /root/.alive
+
+# list of mounts
+# mount directory to container local_path:container_path
+mount:
+  - /home/vagrant/html:/usr/share/nginx/html
+
+upstream:
+  # locally installed nginx, just as frontend proxy for containers
+  - host_nginx:
+    command: "sudo service nginx reload"
+    resource: /home/vagrant/conf.d/nginx_staging_upstream.conf
+    template: |
+      upstream nginx_staging {
+        server 127.0.0.1:%TCP_80%;
+      }

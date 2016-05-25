@@ -1,0 +1,12 @@
+#!/usr/bin/env bash
+
+export EDITOR=nano
+export DOCKER_HOST="tcp://127.0.0.1:{{ docker.port }}"
+export DOCKER_URL="http://127.0.0.1:{{ docker.port }}"
+export PS1="\[\e[0;34m\]\u\[\e[m\]@\[\e[0;31m\]\h\[\e[m\] [\[\e[0;36m\]\w\[\e[m\]] > "
+export PROJECT_ROOT="{{ project_root }}"
+export GOROOT="/usr/local/go"
+export PATH="/usr/local/go/bin:$PATH"
+export GOPATH="{{ project_gopath }}"
+
+cd ${PROJECT_ROOT}

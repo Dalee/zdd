@@ -1,8 +1,62 @@
-hash: 98b4f97dba846a1b6def61de345ba8f40b2ab24ed3e14d3c7f9954d77f15a623
-updated: 2016-05-22T18:55:57.646367611+03:00
+hash: ededc04101495ef7844acd52a46ffdea44e3c9101dde0b64f15752d0a43cbf66
+updated: 2016-05-27T00:14:18.780524714+03:00
 imports:
+- name: github.com/docker/distribution
+  version: 0bd7e971b05ee16641dce6e37ec0aafae7b2eeea
+  subpackages:
+  - context
+  - uuid
+  - reference
+  - digest
 - name: github.com/docker/engine-api
   version: 83e511bd6c624b82a69e23f6c0904f14235d3a12
+  subpackages:
+  - client
+  - types
+  - types/container
+  - types/network
+  - client/transport
+  - client/transport/cancellable
+  - types/filters
+  - types/reference
+  - types/registry
+  - types/time
+  - types/blkiodev
+  - types/strslice
+  - types/versions
+- name: github.com/docker/go-connections
+  version: c7838b258fbfa3fe88eecfb2a0e08ea0dbd6a646
+  subpackages:
+  - nat
+  - sockets
+  - tlsconfig
+- name: github.com/docker/go-units
+  version: 09dda9d4b0d748c57c14048906d3d094a58ec0c9
+- name: github.com/gorilla/context
+  version: 14f550f51af52180c2eefed15e5fd18d63c0a64a
+- name: github.com/gorilla/mux
+  version: e444e69cbd2e2e3e0749a2f3c717cec491552bbf
+- name: github.com/Microsoft/go-winio
+  version: 4f1a71750d95a5a8a46c40a67ffbed8129c2f138
+- name: github.com/opencontainers/runc
+  version: fa5ce1e2d0efe822bbb04fe9a178fdefaeba412c
+  subpackages:
+  - libcontainer/user
+- name: github.com/Sirupsen/logrus
+  version: 55eb11d21d2a31a3cc93838241d04800f52e823d
+  subpackages:
+  - formatters/logstash
+- name: github.com/stretchr/testify
+  version: 8d64eb7173c7753d6419fd4a9caf057398611364
+- name: golang.org/x/net
+  version: 4876518f9e71663000c348837735820161a42df7
+  subpackages:
+  - context
+  - proxy
+- name: golang.org/x/sys
+  version: d4feaf1a7e61e1d9e79e6c4e76c6349e9cab0a03
+  subpackages:
+  - windows
 - name: gopkg.in/yaml.v2
   version: a83829b6f1293c91addabc89d0571c246397bbf4
 devImports: []

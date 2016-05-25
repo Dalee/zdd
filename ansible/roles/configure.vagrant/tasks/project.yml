@@ -1,0 +1,58 @@
+# some ide's like old intellij doesn't support vendor folder
+# so, just add vendor as module library path
+
+- name: project - create vendor
+  file:
+    path: "{{ project_root }}/vendor"
+
+- name: project - setup ide vendor support
+  file:
+    src: "../vendor"
+    dest: "{{ project_root }}/vendor/src"
+    state: "link"
+
+# this directory will be mounted into container
+- name: project - create public_html directory
+  file:
+    path: "/home/vagrant/html"
+    state: "directory"
+    owner: "nobody"
+    group: "nogroup"
+    mode: 0755
+
+- name: project - install public_html index.htm
+  template:
+    src: "sample_html/index.htm"
+    dest: "/home/vagrant/html/index.htm"
+    owner: "nobody"
+    group: "nogroup"
+    mode: 0644
+
+# this directory will be used by nginx for upstream definition
+# zdd will write example.yml template into this directory
+- name: project - create nginx upstream directory
+  file:
+    path: "/home/vagrant/conf.d"
+    state: "directory"
+    owner: "vagrant"
+    group: "vagrant"
+    mode: 0755
+
+- name: project - setup nginx
+  template:
+    src: "nginx.conf"
+    dest: "/etc/nginx/nginx.conf"
+    owner: "root"
+    group: "root"
+
+- name: project - install sample upstream
+  template:
+    src: "nginx_staging_upstream.conf"
+    dest: "/home/vagrant/conf.d/nginx_staging_upstream.conf"
+    owner: "vagrant"
+    group: "vagrant"
+    mode: 0644
+
+- name: nginx - force restart
+  shell: /bin/true
+  notify: restart nginx

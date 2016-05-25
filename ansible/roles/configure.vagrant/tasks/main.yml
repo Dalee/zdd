@@ -1,0 +1,10 @@
+# list of tasks
+
+- name: profile - environment and home setup
+  include: profile.yml
+
+- name: docker - options and restart
+  include: docker.yml
+
+- name: project - setup ide support
+  include: project.yml

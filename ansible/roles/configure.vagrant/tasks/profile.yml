@@ -1,0 +1,26 @@
+# profile setup
+
+- name: profile - check hushlogin
+  stat: path="/home/vagrant/.hushlogin"
+  register: check_hushlogin
+
+- name: profile - hushlogin
+  file:
+    state: "touch"
+    path: "/home/vagrant/.hushlogin"
+    owner: "vagrant"
+    group: "vagrant"
+  when: not check_hushlogin.stat.exists
+
+- name: profile - set environment
+  template:
+    src: "bash_profile.j2"
+    dest: "/home/vagrant/.bash_profile"
+    owner: "vagrant"
+    group: "vagrant"
+
+- name: profile - command-not-found remove
+  apt:
+    name: "command-not-found"
+    state: "absent"
+    purge: "yes"

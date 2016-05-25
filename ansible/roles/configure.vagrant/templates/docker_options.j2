@@ -1,0 +1,4 @@
+# {{ ansible_managed }}
+# Docker Upstart and SysVinit configuration file
+
+DOCKER_OPTS="-H tcp://127.0.0.1:{{ docker.port }} --insecure-registry localhost:5000"

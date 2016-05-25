@@ -1,0 +1,35 @@
+#
+# Install required locales
+#
+- name: install locales
+  locale_gen:
+    name: "{{ item }}"
+    state: present
+  with_items:
+    - "en_US.UTF-8"
+    - "ru_RU.UTF-8"
+
+- name: locale - set default
+  template:
+    src: "locale.j2"
+    dest: "/etc/default/locale"
+    mode: 0644
+    owner: "root"
+    group: "root"
+
+- name: set localtime (Europe/Moscow)
+  file:
+    src: "/usr/share/zoneinfo/Europe/Moscow"
+    dest: "/etc/localtime"
+    owner: "root"
+    group: "root"
+    state: link
+    force: yes
+
+- name: set timezone (Europe/Moscow)
+  template:
+    src: "timezone.j2"
+    dest: "/etc/timezone"
+    mode: 0644
+    owner: "root"
+    group: "root"

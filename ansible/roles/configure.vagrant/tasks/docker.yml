@@ -1,0 +1,9 @@
+# docker configuration
+
+- name: docker - docker options
+  template:
+    src: "docker_options.j2"
+    dest: "/etc/default/docker"
+    owner: "root"
+    group: "root"
+  notify: restart docker

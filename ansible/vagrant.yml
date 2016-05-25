@@ -1,0 +1,13 @@
+#
+# Vagrant
+#
+- hosts: localhost
+  connection: local
+  roles:
+    - install.avahi
+    - install.go
+    - install.docker
+    - install.locales
+    - install.nginx
+    - install.tools
+    - configure.vagrant

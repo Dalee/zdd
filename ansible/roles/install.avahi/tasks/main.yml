@@ -1,0 +1,7 @@
+#
+# Install avahi
+#
+- name: install avahi-daemon
+  apt:
+    name: "avahi-daemon"
+    state: present

@@ -1,0 +1,14 @@
+#
+# For simple Unix tools
+# make, etc..
+#
+- name: installing tools
+  apt:
+    name: "{{ item }}"
+    state: installed
+  with_items:
+    - "make"
+    - "mc"
+    - "vim"
+    - "htop"
+    - "nano"
