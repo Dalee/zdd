@@ -21,6 +21,7 @@ because no version is deployed, yet. Just run:
 
 ```bash
 $ vagrant ssh
+$ glide install
 $ go run ./main.go deploy -c ./example.yml -v 1.11
 ```
 
