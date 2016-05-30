@@ -1,6 +1,20 @@
 # some ide's like old intellij doesn't support vendor folder
 # so, just add vendor as module library path
 
+- name: project - set correct ownership for gopath
+  file:
+    path: "{{ project_gopath }}"
+    state: "directory"
+    owner: "vagrant"
+    group: "vagrant"
+
+- name: project - set correct ownership for gopath/src
+  file:
+    path: "{{ project_gopath }}/src"
+    state: "directory"
+    owner: "vagrant"
+    group: "vagrant"
+
 - name: project - create vendor
   file:
     path: "{{ project_root }}/vendor"
