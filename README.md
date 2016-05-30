@@ -1,3 +1,6 @@
+##
+[![Build Status](https://travis-ci.org/arkady-emelyanov/zdd.svg?branch=master)](https://travis-ci.org/arkady-emelyanov/zdd)
+
 ## Why?
 Use docker for new projects is simple. For old, complex projects setup cloud environment
 and configure all required service discovery things can take forever. Otherwise,
