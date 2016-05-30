@@ -17,6 +17,10 @@ import (
 type emptyStructDef struct {
 }
 
+func isContainerRunning(container types.Container) bool {
+	return strings.HasPrefix(container.Status, "Up ")
+}
+
 // create container definitions
 func (this *BuildMetadata) CreateContainer() error {
 	if this.rollback == true {
@@ -150,8 +154,8 @@ func (this *BuildMetadata) StopOld() error {
 	// stop container with same deployed name
 	stopIdList := make([]string, 0)
 	for _, container := range containerList {
-		// skip stopped and current alive container
-		if container.State != "running" || container.ID == this.ContainerId {
+		// skip stopped and our new alive container
+		if !isContainerRunning(container) || container.ID == this.ContainerId {
 			continue
 		}
 
