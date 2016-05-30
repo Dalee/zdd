@@ -128,6 +128,8 @@ func (this *BuildMetadata) ExecCommands() error {
 			if execInfo.ExitCode != 0 {
 				return errors.New("Bootstrap commands finished with non-zero exit status")
 			}
+
+			fmt.Println("Command successfully finished:", cmd)
 			break
 		}
 	}
