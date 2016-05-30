@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"errors"
 	"time"
+
 	"github.com/docker/engine-api/types"
 	"golang.org/x/net/context"
 )
@@ -23,11 +24,11 @@ func (this *BuildMetadata) CheckAlive() error {
 	err = errors.New("Container is not running")
 	for _, container := range containerList {
 		if container.ID == this.ContainerId {
-			if container.State == "running" {
+			if isContainerRunning(container) {
 				fmt.Println("Container is still alive, moving further...")
 				err = nil
-				break
 			}
+			break
 		}
 	}
 
