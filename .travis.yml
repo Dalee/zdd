@@ -6,7 +6,7 @@ go:
   - tip
 
 before_install:
-  - sudo add-apt-repository ppa:masterminds/glide
+  - sudo add-apt-repository ppa:masterminds/glide -y
   - sudo apt-get update -qq
   - sudo apt-get -y install glide
 
