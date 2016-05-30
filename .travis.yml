@@ -1,0 +1,17 @@
+language: go
+
+# 1.6 is minimal version
+go:
+  - 1.6
+  - tip
+
+before_install:
+  - sudo add-apt-repository ppa:masterminds/glide
+  - sudo apt-get update -qq
+  - sudo apt-get -y install glide
+
+install:
+  - glide install
+
+script:
+  - go test $(go list ./... | grep -v /vendor/)
