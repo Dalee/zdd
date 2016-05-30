@@ -47,15 +47,24 @@ func (this *BuildMetadata) getImageRef() string {
 // find release image in local cache
 func (this *BuildMetadata) findImage(imageRef string) error {
 	fmt.Println("Searching for image:", imageRef)
-	options := types.ImageListOptions{MatchName: imageRef}
+	options := types.ImageListOptions{All:true}
 	imageList, err := this.docker.ImageList(context.Background(), options)
 	if err != nil {
 		return err
 	}
 
-	if len(imageList) > 0 {
-		fmt.Println("Image found:", imageList[0].ID)
-		this.ImageId = imageList[0].ID
+	SearchImage:
+	for _, foundImage := range imageList {
+		for _, repoTag := range foundImage.RepoTags {
+			if repoTag == imageRef {
+				fmt.Println("Image found:", foundImage.ID)
+				this.ImageId = foundImage.ID
+				break SearchImage
+			}
+		}
+	}
+
+	if this.ImageId != "" {
 		return nil
 	}
 
