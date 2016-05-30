@@ -25,5 +25,4 @@ script:
   - go test $(go list ./... | grep -v /vendor/)
   - go build -o zdd
   - ./zdd deploy -c example.yml -v 1.10
-  - docker images
-  - ./zdd deploy -c example.yml -v 1.11
+  - docker ps -a
