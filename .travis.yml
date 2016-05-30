@@ -19,14 +19,17 @@ before_install:
   - sudo apt-get -y install nginx glide
 
 install:
+  - go get github.com/go-playground/overalls
+  - go get github.com/mattn/goveralls
   - glide install
   - mkdir -p /home/vagrant/conf.d
   - mkdir -p /home/vagrant/html
 
 script:
-  - go test $(go list ./... | grep -v /vendor/)
-  - go build -o zdd
-  - ./zdd deploy -c example.yml -v 1.10
-  - ./zdd deploy -c example.yml -v 1.11
-  - ./zdd rollback -c example.yml
-  - docker ps -a
+  - ${GOPATH}/bin/overalls -project=zdd -covermode=count -ignore=.git,ansible,vendor
+  - go run ./main.go deploy -c example.yml -v 1.10
+  - go run ./main.go -c example.yml -v 1.11
+  - go run ./main.go rollback -c example.yml
+
+after_success:
+  - ${GOPATH}/bin/goveralls -coverprofile=overalls.coverprofile -service=travis-ci -repotoken ${COVERALLS_TOKEN}

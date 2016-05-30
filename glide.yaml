@@ -1,5 +1,4 @@
 package: zdd
-version: ""
 import:
 - package: gopkg.in/yaml.v2
 - package: github.com/docker/engine-api
