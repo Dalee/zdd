@@ -1,5 +1,8 @@
 language: go
 
+# import path is required to be zdd
+go_import_path: zdd
+
 # 1.6 is minimal version
 go:
   - 1.6
