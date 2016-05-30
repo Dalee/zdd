@@ -99,9 +99,8 @@ func (this *BuildMetadata) ExecCommands() error {
 
 	for _, cmd := range this.cfg.Bootstrap {
 		fmt.Println("Starting cmd:", cmd)
-		cmdList := strings.Fields(cmd)
 
-		createConfig := types.ExecConfig{Cmd: cmdList}
+		createConfig := types.ExecConfig{Cmd: []string{"sh", "-c", cmd}}
 		resp, err := this.docker.ContainerExecCreate(context.Background(), this.ContainerId, createConfig)
 		if err != nil {
 			return err
@@ -112,7 +111,7 @@ func (this *BuildMetadata) ExecCommands() error {
 			return err
 		}
 
-		// TODO: allow user and timeout to be configurable
+		// TODO: add timeout for command
 		for {
 			// make delay delay and check status of command
 			time.Sleep(1 * time.Second)

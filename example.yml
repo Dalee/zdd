@@ -16,16 +16,18 @@ env:
 port:
   - 80/tcp
 
+# run some commands, wait until they finished and check exit code
 bootstrap:
   - touch /root/.alive
+  - /bin/echo "Hi, there" > /root/.message
+  - sleep 5s
 
-# list of mounts
-# mount directory to container local_path:container_path
+# list of mounts, mount directory to container local_path:container_path
 mount:
   - /home/vagrant/html:/usr/share/nginx/html
 
 upstream:
-  # locally installed nginx, just as frontend proxy for containers
+  # locally installed nginx, just as traffic proxy for container
   - host_nginx:
     command: "sudo service nginx reload"
     resource: /home/vagrant/conf.d/nginx_staging_upstream.conf

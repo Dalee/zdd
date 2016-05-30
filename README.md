@@ -8,9 +8,9 @@ for a small projects deployed on one host, use of full power of cloud is not req
 
 To allow use power of Docker in such environments, here it is: `zdd`:
  * Create and start new container from image
- * Start and bootstrap freshly created container
+ * Bootstrap freshly created container
  * Check container is alive for some period of time
- * Update upstream proxy config and reload upstream
+ * Update upstream config and reload upstream
 
 In other words, it can deploy new container with zero downtime! Vagrant-powered
 playground is included, check it out:
@@ -42,34 +42,40 @@ Rollback to previous version (should be at least two releases):
 $ zdd rollback -c example.yml
 ```
 
-Tool will store deploy log under `${HOME}/.zdd/<name>.deploy_log`, so please make
+`zdd` will store deploy log under `${HOME}/.zdd/<name>.deploy_log`, so please make
 sure user have home and it's allowed to write.
 
 ## Sample configuration file
 
 ```yml
 # name of image to use, mandatory
+# can be anything you can pass to docker pull
+# like:
+#   - dockerhub-name
+#   - registry.example.com:8080/namespace/project
+#   - etc..
 image: nginx
 
-# prefix for container names, final name will be:
-# <name>.v<tag>.<millisecond>
+# prefix for container names, mandatory
+# container name will be formatted as: <name>.v<tag>.<millisecond>
+# all other containers matched name will be stopped after successul deploy
 name: nginx-staging
 
-# set of environment variables to set to container
+# list of environment variables to set to container
 env:
   - HELLO=WORLD
+  - BUILD_NUMBER=${BUILD_NUMBER}
+  - NODE_ENV=production
 
 # define ports exposed by container
-# each port available in upstream template as:
+# each port is available in upstream template as:
 # 80/tcp => %TCP_80%
 # 514/udp => %UDP_514%
 port:
   - 80/tcp
 
-# list of commands to run inside of container
-# right after container is created, but
-# before upstream config is switched
-# useful for migrations / post-deploy things
+# list of commands to run inside of container right after container is created,
+# but before upstream config is switched, useful for migrations / post-deploy things
 bootstrap:
   - touch /root/.alive
 
@@ -78,8 +84,7 @@ bootstrap:
 mount:
   - /home/vagrant/html:/usr/share/nginx/html
 
-# locally installed upstream which is set up
-# in front of docker
+# define list of upstreams to handle routing
 upstream:
   - local_nginx:
     command: "sudo service nginx reload"
