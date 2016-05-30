@@ -28,7 +28,7 @@ install:
 script:
   - ${GOPATH}/bin/overalls -project=zdd -covermode=count -ignore=.git,ansible,vendor
   - go run ./main.go deploy -c example.yml -v 1.10
-  - go run ./main.go -c example.yml -v 1.11
+  - go run ./main.go deploy -c example.yml -v 1.11
   - go run ./main.go rollback -c example.yml
 
 after_success:
