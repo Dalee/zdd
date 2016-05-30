@@ -46,6 +46,11 @@ func (this *BuildMetadata) CreateContainer() error {
 	hostConfig := container.HostConfig{
 		PortBindings:portBindings,
 		Binds: mountBindings,
+		AutoRemove: false,
+		RestartPolicy: container.RestartPolicy{
+			Name: "unless-stopped",
+			MaximumRetryCount: 999999,
+		},
 	}
 
 	// define network config
@@ -103,9 +108,9 @@ func (this *BuildMetadata) ExecCommands() error {
 			return err
 		}
 
-		// and wait until command finished
 		// TODO: allow user and timeout to be configurable
 		for {
+			// make delay delay and check status of command
 			time.Sleep(1 * time.Second)
 
 			// fetch command result
