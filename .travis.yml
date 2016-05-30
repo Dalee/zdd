@@ -8,6 +8,11 @@ go:
   - 1.6
   - tip
 
+sudo: required
+
+services:
+  - docker
+
 before_install:
   - sudo add-apt-repository ppa:masterminds/glide -y
   - sudo apt-get update -qq
@@ -18,3 +23,7 @@ install:
 
 script:
   - go test $(go list ./... | grep -v /vendor/)
+  - go build
+  - zdd deploy -c example.yml -v 1.10
+  - zdd deploy -c example.yml -v 1.11
+
