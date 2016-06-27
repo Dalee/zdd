@@ -24,7 +24,8 @@ script:
 - go run ./main.go rollback -c example.yml
 
 before_deploy:
-  - ./build.sh
+  - GOOS=linux GOARCH=amd64 go build -o ./zdd_linux_amd64
+  - tar -czf ./zdd_linux_amd64.tar.gz ./zdd_linux_amd64
 
 deploy:
   provider: releases
