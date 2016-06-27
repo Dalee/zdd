@@ -1,35 +1,35 @@
 language: go
-
-# import path is required to be zdd
 go_import_path: zdd
-
-# 1.6 is minimal version
 go:
-  - 1.6
-  - tip
-
+- 1.6
+- tip
 sudo: required
 
 services:
-  - docker
+- docker
 
 before_install:
-  - sudo add-apt-repository ppa:masterminds/glide -y
-  - sudo apt-get update -qq
-  - sudo apt-get -y install nginx glide
+- sudo add-apt-repository ppa:masterminds/glide -y
+- sudo apt-get update -qq
+- sudo apt-get -y install nginx glide
 
 install:
-  - go get github.com/go-playground/overalls
-  - go get github.com/mattn/goveralls
-  - glide install
-  - mkdir -p /home/vagrant/conf.d
-  - mkdir -p /home/vagrant/html
+- go get github.com/go-playground/overalls
+- go get github.com/mattn/goveralls
+- glide install
+- mkdir -p /home/vagrant/conf.d
+- mkdir -p /home/vagrant/html
 
 script:
-  - ${GOPATH}/bin/overalls -project=zdd -covermode=count -ignore=.git,ansible,vendor
-  - go run ./main.go deploy -c example.yml -v 1.10
-  - go run ./main.go deploy -c example.yml -v 1.11
-  - go run ./main.go rollback -c example.yml
+- go run ./main.go deploy -c example.yml -v 1.10
+- go run ./main.go deploy -c example.yml -v 1.11
+- go run ./main.go rollback -c example.yml
 
-after_success:
-  - ${GOPATH}/bin/goveralls -coverprofile=overalls.coverprofile -service=travis-ci -repotoken ${COVERALLS_TOKEN}
+deploy:
+  provider: releases
+  api_key:
+    secure: eJmSZwSs8kTZ5DeTtH32Q6E3w1Pkym37JZLZLMtAiZ3AxrguPkmg7c3wDZE7SfkcruSYAS2eOTqVOam0C6ew2FsUsyAyvs0N1GquOnKeZUGw412vDB+eINaqryuhB/CmhvqL2fQHZNtqDVevaweUb/xSlGdxqPBiJWnlHUfqdVivee1VEM+JVODkCo4wLaB917VFLqv9bI6dLr8gXSpjTGclX72491a5wa0zsgQO7n2MiefOlMKLMMnkhRY+CCiTKnGgElShnnD+dQCe3yG9Yd7ROv9I6oSvpThMgQ8370KT1i7dTW05yyinNw+tqY2ClMiN+OxA1JTH+LzS2oAX8ZLsumwTTG3BrLH4pVfLSQdIYPY3dmEm+UGd1TzNBGJ7/wD8YypdyG8wea9B5o2xFqpLHiYaiZiecnuk5V/k4iFjEDRpb3qf0g8TmVSj0C2jJtO/nG2x/tyxvysC4p/q7Vf0hr72eQ7O7cabuR+8N23MZcCbpS6J/S+TjhFym3VDM9J3WxiTsn53HchyEvSGsOaB4oI/f8BeaceprRXZ0WFogqNBN6WdKmEvVXDFVBdwUXT92q/qD/qeZWcvRU/M63YP6eqT7crPzGXHuWBKsuv/4S9Xg9X0zqb3WCmRymj+xrzgM+o+MasFyUqyIxLVVG8TF27G1Q8x2++Cf3+KiFk=
+  file: zdd
+  on:
+    repo: Dalee/zdd
+    branch: travis-ci
