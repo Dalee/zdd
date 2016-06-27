@@ -1,6 +1,5 @@
 ##
-[![Build Status](https://travis-ci.org/arkady-emelyanov/zdd.svg?branch=master)](https://travis-ci.org/arkady-emelyanov/zdd)
-[![Coverage Status](https://coveralls.io/repos/github/arkady-emelyanov/zdd/badge.svg?branch=travis-coverage)](https://coveralls.io/github/arkady-emelyanov/zdd?branch=travis-coverage)
+[![Build Status](https://travis-ci.org/Dalee/zdd.svg?branch=master)](https://travis-ci.org/Dalee/zdd)
 
 ## Why?
 Use docker for new projects is simple. For old, complex projects setup cloud environment
