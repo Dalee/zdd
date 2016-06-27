@@ -25,11 +25,15 @@ script:
 - go run ./main.go deploy -c example.yml -v 1.11
 - go run ./main.go rollback -c example.yml
 
+before_deploy:
+  - ./build.sh
+
 deploy:
   provider: releases
   api_key:
     secure: eJmSZwSs8kTZ5DeTtH32Q6E3w1Pkym37JZLZLMtAiZ3AxrguPkmg7c3wDZE7SfkcruSYAS2eOTqVOam0C6ew2FsUsyAyvs0N1GquOnKeZUGw412vDB+eINaqryuhB/CmhvqL2fQHZNtqDVevaweUb/xSlGdxqPBiJWnlHUfqdVivee1VEM+JVODkCo4wLaB917VFLqv9bI6dLr8gXSpjTGclX72491a5wa0zsgQO7n2MiefOlMKLMMnkhRY+CCiTKnGgElShnnD+dQCe3yG9Yd7ROv9I6oSvpThMgQ8370KT1i7dTW05yyinNw+tqY2ClMiN+OxA1JTH+LzS2oAX8ZLsumwTTG3BrLH4pVfLSQdIYPY3dmEm+UGd1TzNBGJ7/wD8YypdyG8wea9B5o2xFqpLHiYaiZiecnuk5V/k4iFjEDRpb3qf0g8TmVSj0C2jJtO/nG2x/tyxvysC4p/q7Vf0hr72eQ7O7cabuR+8N23MZcCbpS6J/S+TjhFym3VDM9J3WxiTsn53HchyEvSGsOaB4oI/f8BeaceprRXZ0WFogqNBN6WdKmEvVXDFVBdwUXT92q/qD/qeZWcvRU/M63YP6eqT7crPzGXHuWBKsuv/4S9Xg9X0zqb3WCmRymj+xrzgM+o+MasFyUqyIxLVVG8TF27G1Q8x2++Cf3+KiFk=
-  file: zdd
+  file:
+    - "zdd_linux_amd64.tar.gz"
   on:
     repo: Dalee/zdd
-    branch: travis-ci
+    tags: true
